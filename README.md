@@ -1,6 +1,6 @@
 # KLD_estimation
 --------------------------------------------
-Estimation of Kullback-Leibler divergence (KLD) based on DOI:10.1109/ISIT.2008.4595271, by Fernando Pérez-Cruz
+Estimation of Kullback-Leibler divergence (KLD) based on DOI:10.1109/ISIT.2008.4595271
 --------------------------------------------
 
 The present code is based on Section II of Fernando Pérez-Cruz's paper "Kullback-Leibler Divergence Estimation of Continuous Distributions". From two datasets of continuous variables, the KLD (also known as relative entropy) is estimated by the construction of cumulative probability distributions and the comparison between their slopes.
