@@ -1,5 +1,7 @@
+import argparse
 import numpy as np
 from scipy.interpolate import interp1d
+
 
 def cumcount_reduced(arr):
     '''Cumulative count of a array'''
@@ -17,7 +19,7 @@ def cumcount_reduced(arr):
     return (sorted_arr, counts)
 
 
-def kl_div(P, Q, eps=1e-10):
+def kl_div(P, Q, eps=1e-12):
     '''KL divergence calculation '''
     P = sorted(P)
     Q = sorted(Q)
@@ -32,18 +34,41 @@ def kl_div(P, Q, eps=1e-10):
     x_max= np.min([P_positions[-1], Q_positions[-1]])
     
     X = np.array( [x for x in P_positions if ((x >= x_min) & (x <= x_max))] )
-    values = (f_P(X) - f_P(X-eps))  / (f_Q(X) - f_Q(X-eps))
-    out = np.sum(np.log(values[values > 0]))
-    out /= len(X)
-    out -= 1.
+    values = (f_P(X) - f_P(X - eps)) / (f_Q(X) - f_Q(X - eps))
+
+    out = (np.sum(np.log(values[values > 0])) / len(X)) - 1.
+
     return out
 
 
-def main():
-   P = np.random.normal(loc=0.3, scale=1, size=size)
-    Q = np.random.normal(loc=1, scale=2, size=size)
-    outputs.append(get_delta(P, Q)) 
+def main(avg_1, std_1, avg_2, std_2, size):
+    P = np.random.normal(
+        loc=avg_1,
+        scale=std_1,
+        size=size
+    )
+
+    Q = np.random.normal(
+        loc=avg_2,
+        scale=std_2,
+        size=size
+    )
+
+    return kl_div(P, Q)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser("Read distribution avg and stds")
+    parser.add_argument('avg_1', type=float)
+    parser.add_argument('avg_2', type=float)
+    parser.add_argument('std_1', type=float)
+    parser.add_argument('std_2', type=float)
+    parser.add_argument('size', type=int, default=100, nargs='?')
+
+    args = parser.parse_args()
+
+    try:
+        out = main(**vars(args))
+        print(f'\033[92mKL divergence: {out}\033[0m')
+    except Exception as e:
+        print(e)
