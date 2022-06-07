@@ -19,8 +19,8 @@ def cumcount_reduced(arr):
     return (sorted_arr, counts)
 
 
-def kl_div(P, Q, eps=1e-12):
-    '''KL divergence calculation '''
+def KLD_PerezCruz(P, Q, eps=1e-11):
+    '''KL divergence calculation'''
     P = sorted(P)
     Q = sorted(Q)
     
@@ -35,11 +35,11 @@ def kl_div(P, Q, eps=1e-12):
     
     X = np.array( [x for x in P_positions if ((x >= x_min) & (x <= x_max))] )
     values = (f_P(X) - f_P(X - eps)) / (f_Q(X) - f_Q(X - eps))
-
-    out = (np.sum(np.log(values[values > 0])) / len(X)) - 1.
+    filt = ((values != 0.) & ~(np.isinf(values)))
+    values_filter = values[filt]
+    out = (np.sum(np.log(values_filter)) / len(values_filter)) - 1.
 
     return out
-
 
 def main(avg_1, std_1, avg_2, std_2, size):
     P = np.random.normal(
@@ -54,7 +54,7 @@ def main(avg_1, std_1, avg_2, std_2, size):
         size=size
     )
 
-    return kl_div(P, Q)
+    return KLD_PerezCruz(P, Q)
 
 
 if __name__ == '__main__':
