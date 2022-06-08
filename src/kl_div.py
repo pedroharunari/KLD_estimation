@@ -30,6 +30,7 @@ def KLD_PerezCruz(P, Q, eps=1e-11):
     f_P = interp1d(P_positions, P_counts)
     f_Q = interp1d(Q_positions, Q_counts)
     
+    #alternatively to defining x_0 and x_{n+1}, we only use the intersection between both sets
     x_min = np.max([P_positions[1], Q_positions[1]])
     x_max= np.min([P_positions[-1], Q_positions[-1]])
     
