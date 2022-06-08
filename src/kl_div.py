@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 from scipy.interpolate import interp1d
 
-
+#returns the step function value at each increment of the CDF
 def cumcount_reduced(arr):
     '''Cumulative count of a array'''
     sorted_arr = np.array(arr)
@@ -18,7 +18,7 @@ def cumcount_reduced(arr):
 
     return (sorted_arr, counts)
 
-
+#takes two datasets to estimate the relative entropy between their PDFs
 def KLD_PerezCruz(P, Q, eps=1e-11):
     '''KL divergence calculation'''
     P = sorted(P)
