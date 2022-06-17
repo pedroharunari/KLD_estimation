@@ -1,0 +1,13 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: KLD_estimation
+message: Please cite this software using these metadata.
+type: software
+authors:
+  - given-names: Pedro
+    name-particle: E.
+    family-names: Harunari
+  - given-names: Ariel
+    family-names: Yssou
