@@ -1,4 +1,4 @@
-# KLD_estimation
+# Kullback-Leibler divergence estimation algorithm and inter-transition times application
 
 Estimation of Kullback-Leibler divergence (KLD) based on DOI:10.1109/ISIT.2008.4595271
 --------------------------------------------
