@@ -6,8 +6,7 @@ title: KLD_estimation
 message: Please cite this software using these metadata.
 type: software
 authors:
-  - given-names: Pedro
-    name-particle: E.
+  - given-names: Pedro E.
     family-names: Harunari
   - given-names: Ariel
     family-names: Yssou
