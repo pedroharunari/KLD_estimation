@@ -9,8 +9,12 @@ Estimating the probability distributions and directly evaluating KLD's definitio
 
 The code is written in python and can be collected in the first cell of the notebook kl_calculation.ipynb.
 
-Its usage is illustrated in the entropy production inference scheme introduced in arxiv.org/abs/2203.07427 (see application folder), which explores the relation between KLD and entropy production, a key physical quantity in nonequilibrium thermodynamics. I encourage researchers in this field to learn and use good estimators for KLD.
+Its usage is illustrated in two scenarios (see applications folder):
+  1. Entropy production inference scheme introduced in arxiv.org/abs/2203.07427, which explores the relation between KLD and entropy production, a key physical quantity in nonequilibrium thermodynamics. I encourage researchers in this field to learn and use good estimators for KLD.
+  2. Using data processed from a real biological system, we import and analyze two timeseries in view of KLD estimation using Pérez-Cruz's and the standard method.
+
+
 
 Comments are welcome: pedroharunari [at] gmail.com
 
-The estimator implementation was written in collaboration with Ariel Yssou.
+The estimator implementation was written with the help Ariel Yssou.
