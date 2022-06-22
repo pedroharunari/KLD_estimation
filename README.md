@@ -17,4 +17,4 @@ Its usage is illustrated in two scenarios (see applications folder):
 
 Comments are welcome: pedroharunari [at] gmail.com
 
-The estimator implementation was written with the help Ariel Yssou.
+The estimator implementation was written with the help of Ariel Yssou.
