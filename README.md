@@ -7,7 +7,7 @@ The present code is based on Section II of Fernando Pérez-Cruz's paper "Kullbac
 
 Estimating the probability distributions and directly evaluating KLD's definition leads to a biased estimation, whereas the present method leads to an unbiased estimation. This is particularly important in practical applications due to the finitude of collected statistics.
 
-The code is written in python and can be collected in the first cell of the notebook kl_calculation.ipynb.
+The code is written in python and can be collected in the first cell of the jupyter notebook kl_calculation.ipynb.
 
 Its usage is illustrated in two scenarios (see applications folder):
   1. Entropy production inference scheme introduced in arxiv.org/abs/2203.07427, which explores the relation between KLD and entropy production, a key physical quantity in nonequilibrium thermodynamics. I encourage researchers in this field to learn and use good estimators for KLD.
