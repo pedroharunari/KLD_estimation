@@ -1,5 +1,4 @@
 # Kullback-Leibler divergence estimation algorithm and inter-transition times application
---------------------------------------------
 
 The present code is based on Section II of Fernando Pérez-Cruz's paper "Kullback-Leibler Divergence Estimation of Continuous Distributions", DOI:10.1109/ISIT.2008.4595271. From two independent datasets of continuous variables, the KLD (aka relative entropy) is estimated by the construction of cumulative probability distributions and the comparison between their slopes at specific points.
 
