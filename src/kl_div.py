@@ -19,26 +19,36 @@ def cumcount_reduced(arr):
     return (sorted_arr, counts)
 
 #takes two datasets to estimate the relative entropy between their PDFs
-def KLD_PerezCruz(P, Q, eps=1e-11):
-    '''KL divergence calculation'''
-    P = sorted(P)
-    Q = sorted(Q)
-    
-    P_positions, P_counts = cumcount_reduced(P)
-    Q_positions, Q_counts = cumcount_reduced(Q)
-    
-    f_P = interp1d(P_positions, P_counts)
-    f_Q = interp1d(Q_positions, Q_counts)
-    
-    #alternatively to defining x_0 and x_{n+1}, we only use the intersection between both sets
-    x_min = np.max([P_positions[1], Q_positions[1]])
-    x_max= np.min([P_positions[-1], Q_positions[-1]])
-    
-    X = np.array( [x for x in P_positions if ((x >= x_min) & (x <= x_max))] )
-    values = (f_P(X) - f_P(X - eps)) / (f_Q(X) - f_Q(X - eps))
-    filt = ((values != 0.) & ~(np.isinf(values)))
-    values_filter = values[filt]
-    out = (np.sum(np.log(values_filter)) / len(values_filter)) - 1.
+def KLD_PerezCruz(P, Q, eps=None):
+    '''KL divergence calculation (inputs assumed continuous; eps kept for compatibility, unused)'''
+    P = np.asarray(P, dtype=float).ravel()
+    Q = np.asarray(Q, dtype=float).ravel()
+    if P.size == 0 or Q.size == 0:
+        raise ValueError("P and Q must be non-empty")
+    if not (np.all(np.isfinite(P)) and np.all(np.isfinite(Q))):
+        raise ValueError("P and Q must be finite")
+
+    #definition of x_0 and x_{n+1}, padding relative to the data range
+    lo, hi = min(P.min(), Q.min()), max(P.max(), Q.max())
+    if hi == lo:
+        raise ValueError("all samples identical")
+    pad = (hi - lo) / (P.size + Q.size)
+
+    #unique knots; tied points sit at the midpoint of the CDF jump (U(0)=1/2)
+    def knots(x):
+        u, c = np.unique(x, return_counts=True)
+        return u, (np.cumsum(c) - c / 2) / len(x), c
+
+    uP, vP, cP = knots(P)
+    uQ, vQ, _ = knots(Q)
+    P_positions, P_counts = np.r_[lo - pad, uP], np.r_[0., vP]
+    Q_positions, Q_counts = np.r_[lo - pad, uQ, hi + pad], np.r_[0., vQ, 1.]
+
+    #exact left slope of P_c at each x_i, and of Q_c on the segment containing x_i
+    slope_P = np.diff(P_counts) / np.diff(P_positions)
+    j = np.searchsorted(Q_positions, uP)
+    slope_Q = (Q_counts[j] - Q_counts[j-1]) / (Q_positions[j] - Q_positions[j-1])
+    out = np.sum(cP * np.log(slope_P / slope_Q)) / P.size - 1.
 
     return out
 
